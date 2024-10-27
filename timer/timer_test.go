@@ -39,10 +39,10 @@ func TestTimer(t *testing.T) {
 	}
 	t.Run("timer returns IsCompleted", func(*testing.T) {
 		b := &bytes.Buffer{}
-		duration := 0 * time.Second
+		sleepDuration := 0 * time.Second
 		durationSpy := SpyTime{}
-		s := &ConfigurableSleeper{duration, durationSpy.Sleep}
-		timer := NewTimer(b, s)
+		s := &ConfigurableSleeper{sleepDuration, durationSpy.Sleep}
+		timer := NewTimer(b, s, 3)
 		timer.Start()
 		// TODO: FRAGILE, timer interruption needs to be coded to fix
 		if timer.IsCompleted != true {
@@ -51,10 +51,10 @@ func TestTimer(t *testing.T) {
 	})
 	t.Run("timer not counting", func(t *testing.T) {
 		b := &bytes.Buffer{}
-		duration := 0 * time.Second
+		sleepDuration := 0 * time.Second
 		durationSpy := SpyTime{}
-		s := &ConfigurableSleeper{duration, durationSpy.Sleep}
-		timer := NewTimer(b, s)
+		s := &ConfigurableSleeper{sleepDuration, durationSpy.Sleep}
+		timer := NewTimer(b, s, 1)
 		assertCounting(t, timer, false,
 			"Timer should not automatically begin counting when instantiated")
 		timer.Start()
@@ -64,10 +64,10 @@ func TestTimer(t *testing.T) {
 	})
 	t.Run("timer should toggle", func(t *testing.T) {
 		b := &bytes.Buffer{}
-		duration := 0 * time.Second
+		sleepDuration := 0 * time.Second
 		durationSpy := SpyTime{}
-		s := &ConfigurableSleeper{duration, durationSpy.Sleep}
-		timer := NewTimer(b, s)
+		s := &ConfigurableSleeper{sleepDuration, durationSpy.Sleep}
+		timer := NewTimer(b, s, 1)
 		timer.Toggle()
 		// TODO: FRAGILE, timer interruption needs to be coded to fix
 		if timer.IsCompleted != true {
@@ -79,10 +79,10 @@ func TestTimer(t *testing.T) {
 	})
 	t.Run("timer should print 321Pomogobro!", func(t *testing.T) {
 		b := &bytes.Buffer{}
-		duration := 0 * time.Second
+		sleepDuration := 0 * time.Second
 		durationSpy := SpyTime{}
-		s := &ConfigurableSleeper{duration, durationSpy.Sleep}
-		timer := NewTimer(b, s)
+		s := &ConfigurableSleeper{sleepDuration, durationSpy.Sleep}
+		timer := NewTimer(b, s, 3)
 		timer.Start()
 		got := b.String()
 		want := `3
@@ -96,13 +96,40 @@ Pomogobro!
 	})
 	t.Run("timer order of ops", func(t *testing.T) {
 		s := &SpyCountdownOps{}
-		timer := NewTimer(s, s)
+		timer := NewTimer(s, s, 3)
 		timer.Start()
 		want := []string{write, sleep, write, sleep, write, sleep, write}
 		if !reflect.DeepEqual(s.Calls, want) {
 			t.Errorf("got %v want %v", s.Calls, want)
 		}
 
+	})
+	t.Run("timer takes a 5sec duration", func(t *testing.T) {
+		s := &SpyCountdownOps{}
+		timer := NewTimer(s, s, 5)
+		if timer.RemainingTicks != 5 {
+			t.Errorf("got %v want %v", timer.RemainingTicks, 5)
+		}
+	})
+	t.Run("5sec timer prints 54321Pomogobro!", func(t *testing.T) {
+		b := &bytes.Buffer{}
+		sleepDuration := 0 * time.Second
+		durationSpy := SpyTime{}
+		s := &ConfigurableSleeper{sleepDuration, durationSpy.Sleep}
+		timer := NewTimer(b, s, 5)
+		timer.Start()
+		got := b.String()
+
+		want := `5
+4
+3
+2
+1
+Pomogobro!
+`
+		if got != want {
+			t.Errorf("got %q want %q", got, want)
+		}
 	})
 }
 

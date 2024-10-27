@@ -198,8 +198,6 @@ My daily use and heavy reliance on the following apps inspired this tool:
 * [LytixDev/tomatoshell](https://github.com/LytixDev/tomatoshell)
 * [octobanana/peaclock](https://github.com/octobanana/peaclock)
 * [taskwarrior](https://taskwarrior.org)
-
-* []()
 * []()
 * []()
 

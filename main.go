@@ -9,9 +9,9 @@ import (
 
 func main() {
 	// test stdout
-	s := &timer.ConfigurableSleeper{Duration: 1 * time.Second, SleepFunc: time.Sleep}
-	// s := timer.ConfigurableSleeper{Duration: 333 * time.Millisecond, SleepFunc: time.Sleep}
-	t := timer.NewTimer(os.Stdout, s)
+	// s := &timer.ConfigurableSleeper{SleepDuration: 1 * time.Second, SleepFunc: time.Sleep}
+	s := &timer.ConfigurableSleeper{SleepDuration: 333 * time.Millisecond, SleepFunc: time.Sleep}
+	t := timer.NewTimer(os.Stdout, s, time.Duration(8*time.Second))
 	t.Start()
 	// test buffer
 	// b := &bytes.Buffer{}
