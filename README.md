@@ -195,9 +195,9 @@ Project Link: [https://github.com/BigJayToDaIzo/pomogobro](https://github.com/Bi
 ## Acknowledgments
 My daily use and heavy reliance on the following apps inspired this tool:
 
-* github.com/LytixDev/tomatoshell
-* github.com/octobanana/peaclock
-* taskwarrior.org
+* [LytixDev/tomatoshell](https://github.com/LytixDev/tomatoshell)
+* [octobanana/peaclock](https://github.com/octobanana/peaclock)
+* [taskwarrior](https://taskwarrior.org)
 
 * []()
 * []()
