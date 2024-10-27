@@ -11,7 +11,7 @@ func main() {
 	// test stdout
 	// s := &timer.ConfigurableSleeper{SleepDuration: 1 * time.Second, SleepFunc: time.Sleep}
 	s := &timer.ConfigurableSleeper{SleepDuration: 333 * time.Millisecond, SleepFunc: time.Sleep}
-	t := timer.NewTimer(os.Stdout, s, time.Duration(8*time.Second))
+	t := timer.NewTimer(os.Stdout, s, 8)
 	t.Start()
 	// test buffer
 	// b := &bytes.Buffer{}
