@@ -55,11 +55,11 @@ func TestTimer(t *testing.T) {
 		durationSpy := SpyTime{}
 		s := &ConfigurableSleeper{sleepDuration, durationSpy.Sleep}
 		timer := NewTimer(b, s, 1)
-		assertCounting(t, timer, false,
+		assertCounting(t, *timer, false,
 			"Timer should not automatically begin counting when instantiated")
 		timer.Start()
 		timer.Stop()
-		assertCounting(t, timer, false,
+		assertCounting(t, *timer, false,
 			"Timer should not be couting after Stop()")
 	})
 	t.Run("timer should toggle", func(t *testing.T) {
@@ -74,7 +74,7 @@ func TestTimer(t *testing.T) {
 			t.Errorf("got %v want %v", timer.IsCompleted, true)
 		}
 		timer.Toggle()
-		assertCounting(t, timer, false,
+		assertCounting(t, *timer, false,
 			"Timer should stop counting after second Toggle()")
 	})
 	t.Run("timer should print 321Pomogobro!", func(t *testing.T) {

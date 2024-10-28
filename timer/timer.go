@@ -30,8 +30,8 @@ type Timer struct {
 // configuration points temp set to const
 const completeMsg = "Pomogobro!"
 
-func NewTimer(w io.Writer, s Sleeper, t int) Timer {
-	return Timer{
+func NewTimer(w io.Writer, s Sleeper, t int) *Timer {
+	return &Timer{
 		IsCounting:     false,
 		RemainingTicks: t,
 		IsCompleted:    false,
